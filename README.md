@@ -8,12 +8,13 @@ The project demonstrates deep reinforcement learning applied to a multi-player, 
 
 Project Overview
 
-	Details
+"""
 Training time	109.5 hours
 Frameworks	TensorFlow, Keras, Wandb, Numpy
 RL Algorithm	Deep Q-Network (DQN)
 Environment	Custom Uno Game Engine
 Logging	Tensorboard + Weights & Biases
+"""
 
 The agent was trained over 140k+ steps with experience replay, target network synchronization, and epsilon-greedy exploration.
 
@@ -70,7 +71,7 @@ Results
 
 Cumulative Reward vs Steps
 
-<img src="/mnt/data/cumulative_Reward.jpeg" width="800">
+<img src="static/cumulative_Reward.png" width="800">
 
 
 	•	Cumulative reward stays mostly negative (around -6 on average), suggesting that while the agent learns to survive, winning is still rare under initial reward structure.
