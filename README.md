@@ -78,7 +78,7 @@ Cumulative reward remains mostly negative (around -6 on average), indicating the
 
 ### Epsilon Decay
 
-![Epsilon Decay](static/epsilon_runtime.png)
+![Epsilon Decay]("static/epsilon runtime.png")
 
 Smooth decay from 1.0 to approximately 0.94 over 140,000 steps, reflecting a gradual shift from exploration towards exploitation.
 
