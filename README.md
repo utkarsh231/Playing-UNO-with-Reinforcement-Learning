@@ -1,168 +1,169 @@
-Uno-RL Agent
+# Uno-RL Agent
 
-Uno-RL is a Deep Q-Learning based reinforcement learning agent trained to play the game of Uno from scratch using a custom-built environment and reward system.
+Uno-RL is a Deep Q-Learning-based reinforcement learning agent trained to play the game of Uno from scratch using a custom-built environment and reward system.
 
-The project demonstrates deep reinforcement learning applied to a multi-player, turn-based card game, using TensorFlow/Keras, experience replay, target networks, and Weights & Biases logging.
+This project showcases the application of deep reinforcement learning to a multi-player, turn-based card game utilizing TensorFlow/Keras, experience replay, target networks, and integrated logging via TensorBoard and Weights & Biases.
 
-⸻
+---
 
-Project Overview
+## Project Overview
 
-"""
-Training time	109.5 hours
-Frameworks	TensorFlow, Keras, Wandb, Numpy
-RL Algorithm	Deep Q-Network (DQN)
-Environment	Custom Uno Game Engine
-Logging	Tensorboard + Weights & Biases
-"""
+| Attribute       | Details                         |
+|-----------------|---------------------------------|
+| **Training Time** | 109.5 hours                  |
+| **Frameworks**    | TensorFlow, Keras, Wandb, Numpy |
+| **RL Algorithm**  | Deep Q-Network (DQN)           |
+| **Environment**   | Custom Uno Game Engine         |
+| **Logging**       | TensorBoard, Weights & Biases  |
 
-The agent was trained over 140k+ steps with experience replay, target network synchronization, and epsilon-greedy exploration.
+The agent underwent training over 140,000+ steps, utilizing experience replay, target network synchronization, and epsilon-greedy exploration.
 
-⸻
+---
 
-Key Components
+## Key Components
 
-Custom Uno Environment
-	•	Full Uno gameplay logic including:
-	•	Regular and special cards (Skip, Reverse, Draw Two, Wild, Wild Draw Four)
-	•	Turn-based system with reversing directions
-	•	Draw pile management
-	•	State representation:
-	•	Current top card one-hot encoding
-	•	Player hand card counts
-	•	Cards to draw information
-	•	Action space:
-	•	Play a specific card or draw a card
+### Custom Uno Environment
+- Full gameplay logic includes:
+  - Regular and special cards (Skip, Reverse, Draw Two, Wild, Wild Draw Four)
+  - Turn-based mechanics with reversible directions
+  - Draw pile management
+- **State Representation:**
+  - Current top card (one-hot encoding)
+  - Player hand card counts
+  - Cards to draw information
+- **Action Space:**
+  - Play a specific card
+  - Draw a card
 
-Reward Structure
+### Reward Structure
 
-Original rewards (first run):
-	•	Illegal move: -2
-	•	Drawing a card: -1
-	•	Playing a card: +2
-	•	Winning the game: +10
+**Initial rewards (first run):**
+- Illegal move: `-2`
+- Drawing a card: `-1`
+- Playing a card: `+2`
+- Winning the game: `+10`
 
-Updated reward structure (planned for second run, based on improvements):
-	•	Illegal move: -2
-	•	Drawing a card: -0.2
-	•	Playing a card: +1
-	•	Playing a special card: +2
-	•	Having 2 cards left: +2 (Near Win)
-	•	Having 1 card left: +5 (Almost Win)
-	•	Winning the game: +10
+**Updated rewards (second run improvements):**
+- Illegal move: `-2`
+- Drawing a card: `-0.2`
+- Playing a card: `+1`
+- Playing special cards: `+2`
+- Having 2 cards left (Near Win): `+2`
+- Having 1 card left (Almost Win): `+5`
+- Winning the game: `+10`
 
-Model and Training
-	•	Q-network: MLP (Multi-layer perceptron) trained using MSE loss.
-	•	Replay Buffer: 10,000 most recent transitions.
-	•	Batch size: 512
-	•	Discount factor (gamma): 0.7
-	•	Learning rate: 1e-4
-	•	Target network updates: Every 20 steps.
-	•	Model saves: Every 20,000 steps.
+### Model and Training
+- **Q-Network:** MLP (Multi-layer Perceptron) trained using Mean Squared Error (MSE) loss.
+- **Replay Buffer:** Stores 10,000 most recent transitions
+- **Batch Size:** 512
+- **Discount Factor (γ):** 0.7
+- **Learning Rate:** 1e-4
+- **Target Network Updates:** Every 20 steps
+- **Model Saves:** Every 20,000 steps
 
-Epsilon-greedy exploration
-	•	Initial epsilon: 1.0
-	•	Minimum epsilon: 0.05
-	•	Decay rate: 0.995
+### Epsilon-Greedy Exploration
+- Initial epsilon: `1.0`
+- Minimum epsilon: `0.05`
+- Decay rate: `0.995`
 
-⸻
+---
 
-# Results
+## Results
 
 ### Cumulative Reward vs Steps
 
-<img src="static/cumulative_Reward.png" width="800">
+![Cumulative Reward](static/cumulative_Reward.png)
 
-
-Cumulative reward stays mostly negative (around -6 on average), suggesting that while the agent learns to survive, winning is still rare under initial reward structure.
+Cumulative reward remains mostly negative (around -6 on average), indicating the agent learns survival but rarely wins under the initial reward system.
 
 ### Epsilon Decay
 
-<img src="static/epsilon runtime.png" width="800">
+![Epsilon Decay](static/epsilon_runtime.png)
 
-
-Smooth epsilon decay from 1.0 to about 0.94 over 140k steps, indicating continuous shift from exploration to exploitation.
+Smooth decay from 1.0 to approximately 0.94 over 140,000 steps, reflecting a gradual shift from exploration towards exploitation.
 
 ### Game Length
 
-<img src="static/game_length.png" width="800">
+![Game Length](static/game_length.png)
 
-
-The majority of games end in 4-5 moves, suggesting the agent either loses quickly or stabilizes fast.
+Most games conclude within 4-5 moves, indicating quick resolution or early stabilization.
 
 ### Loss Curve
 
-<img src="static/loss.png" width="800">
+![Loss Curve](static/loss.png)
 
-
-Loss is generally low but shows spikes around major replay memory flushes or after rare events.
+Loss remains generally low, though periodic spikes occur likely due to memory refreshes or rare game events.
 
 ### Mean Reward
 
-<img src="static/mean_reward.png" width="800">
+![Mean Reward](static/mean_reward.png)
 
+Mean reward is consistently negative (~ -1), indicating the original reward structure's limited success in promoting winning strategies.
 
-Mean reward remains consistently negative (~-1) across most training steps in the initial run.
+---
 
-⸻
+## Future Improvements (In Progress)
 
-Future Improvements (In Progress)
+### Reward Engineering
+Enhanced reward structure to encourage strategic gameplay:
+- Positive incentives for nearing win conditions.
+- Additional rewards for strategic special card usage.
 
-🔵 Reward Engineering:
-Modified the reward structure to encourage strategic gameplay:
-	•	Positive rewards for nearing win conditions (2 or 1 cards left).
-	•	Additional reward for playing special cards (Skip, Draw 2, Wild, etc.).
+### Updated Training
+- Second run completed using improved reward system.
+- Comparative analysis of mean rewards:
 
-🔵 Updated Training (second run):
-	•	A second run was conducted with the improved rewards.
-	•	Comparison of mean reward trends between the two runs:
+![Updated Mean Rewards](static/updated_mean_rewards.png)
 
-<img src="static/updated_mean_rewards.png" width="800">
+Early results indicate improved learning with revised rewards, evidenced by increased mean reward.
 
+---
 
-	•	Early results show higher mean rewards with the new reward structure, suggesting better learning behavior.
+## How to Run
 
-⸻
-
-How to Run
-	1.	Install dependencies
-
+### 1. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-	2.	Train the agent
-
+### 2. Train the Agent
+```bash
 python train.py
+```
 
-	3.	Visualize logs on Tensorboard
-
+### 3. Visualize Logs
+```bash
 tensorboard --logdir=logs/
+```
 
-	4.	Visualize full training metrics via Weights & Biases (optional, if wandb enabled).
+### 4. Optional Visualization via Weights & Biases
 
-⸻
+Ensure WandB is enabled for comprehensive metrics visualization.
 
-Folder Structure
+---
 
-Folder	Purpose
-agent.py	Main DQN agent
-environment.py	Custom Uno environment
-train.py	Training loop
-models/	Saved model checkpoints
-logs/	TensorBoard logs
-wandb/	Weights & Biases tracking (optional)
+## Folder Structure
 
+| Folder/File       | Purpose                         |
+|-------------------|---------------------------------|
+| `agent.py`        | Main DQN agent                  |
+| `environment.py`  | Custom Uno environment          |
+| `train.py`        | Training loop                   |
+| `models/`         | Saved model checkpoints         |
+| `logs/`           | TensorBoard logs                |
+| `wandb/`          | Weights & Biases tracking (optional) |
 
+---
 
-⸻
+## Acknowledgements
+- Reinforcement learning concepts based on *Sutton & Barto’s* "Reinforcement Learning: An Introduction".
+- TensorFlow/Keras official documentation.
+- Adaptation of Uno card game rules tailored for reinforcement learning.
 
-Acknowledgements
-	•	Reinforcement learning concepts based on Sutton & Barto’s textbook.
-	•	TensorFlow/Keras documentation.
-	•	Uno card game rules adapted to fit a reinforcement learning context.
+---
 
-⸻
+✨ **Notes:**
+- Total training duration: 109.5 hours across multiple sessions.
+- Ensured consistent model-saving intervals to mitigate interruptions.
+- Environment designed as fully self-contained; no external Uno engines required.
 
-✨ Notes
-	•	Training took 109.5 hours over multiple sessions.
-	•	Code ensures model saving at consistent intervals to prevent losses after interruptions.
-	•	The environment is fully self-contained, no external Uno engine used.
