@@ -67,42 +67,42 @@ Epsilon-greedy exploration
 
 ⸻
 
-Results
+# Results
 
-Cumulative Reward vs Steps
+### Cumulative Reward vs Steps
 
 <img src="static/cumulative_Reward.png" width="800">
 
 
-	•	Cumulative reward stays mostly negative (around -6 on average), suggesting that while the agent learns to survive, winning is still rare under initial reward structure.
+Cumulative reward stays mostly negative (around -6 on average), suggesting that while the agent learns to survive, winning is still rare under initial reward structure.
 
-Epsilon Decay
+### Epsilon Decay
 
-<img src="/mnt/data/epsilon runtime.jpeg" width="800">
-
-
-	•	Smooth epsilon decay from 1.0 to about 0.94 over 140k steps, indicating continuous shift from exploration to exploitation.
-
-Game Length
-
-<img src="/mnt/data/game_length.jpeg" width="800">
+<img src="static/epsilon runtime.png" width="800">
 
 
-	•	The majority of games end in 4-5 moves, suggesting the agent either loses quickly or stabilizes fast.
+Smooth epsilon decay from 1.0 to about 0.94 over 140k steps, indicating continuous shift from exploration to exploitation.
 
-Loss Curve
+### Game Length
 
-<img src="/mnt/data/loss.jpeg" width="800">
-
-
-	•	Loss is generally low but shows spikes around major replay memory flushes or after rare events.
-
-Mean Reward
-
-<img src="/mnt/data/mean_reward.jpeg" width="800">
+<img src="static/game_length.png" width="800">
 
 
-	•	Mean reward remains consistently negative (~-1) across most training steps in the initial run.
+The majority of games end in 4-5 moves, suggesting the agent either loses quickly or stabilizes fast.
+
+### Loss Curve
+
+<img src="static/loss.png" width="800">
+
+
+Loss is generally low but shows spikes around major replay memory flushes or after rare events.
+
+### Mean Reward
+
+<img src="static/mean_reward.png" width="800">
+
+
+Mean reward remains consistently negative (~-1) across most training steps in the initial run.
 
 ⸻
 
@@ -117,7 +117,7 @@ Modified the reward structure to encourage strategic gameplay:
 	•	A second run was conducted with the improved rewards.
 	•	Comparison of mean reward trends between the two runs:
 
-<img src="/mnt/data/updated_mean_rewards.jpeg" width="800">
+<img src="static/updated_mean_rewards.png" width="800">
 
 
 	•	Early results show higher mean rewards with the new reward structure, suggesting better learning behavior.
